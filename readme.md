@@ -467,6 +467,35 @@
           print(f"{key}: {value}")
   func(1, 2, 3, name="Alice", age=25)
   ```
+- Functions can be nested inside other functions:
+  ```python
+  def outer_function():
+      def inner_function():
+          print("Hello from inner function!")
+      inner_function()
+  outer_function()
+  ```
+- Functions are first-class citizens in Python, meaning they can be passed as arguments to other functions, returned from functions, and assigned to variables.
+- Example:
+  ```python
+  def square(x):
+      return x * x
+
+  def apply_function(func, value):
+      return func(value)
+
+  result = apply_function(square, 5)
+  print(result)  # Output: 25
+  ```
+- Lambda Functions:
+  - Lambda functions are small anonymous functions defined using the `lambda` keyword.
+  - They can take any number of arguments but can only have a single expression.
+  - Example:
+    ```python
+    add = lambda x, y: x + y
+    result = add(3, 5)
+    print(result)  # Output: 8
+    ```
 
 ### Python built in functions 
 -- Python provides several built-in functions that are always available for use. Some commonly used built-in functions include:
@@ -517,3 +546,167 @@
   finally:
       print("Execution completed.")
   ```
+
+## Day 3: Advanced Python Concepts
+
+### Programming Paradigms in Python
+- Python supports multiple programming paradigms, including:
+  - Procedural Programming: Focuses on writing procedures or routines to perform tasks. It uses functions and control flow statements to structure code.
+  - Object-Oriented Programming (OOP): Organizes code into objects that encapsulate data and behavior. It uses classes, inheritance, polymorphism, and encapsulation.
+  - Functional Programming: Emphasizes the use of pure functions, higher-order functions, and immutability. It avoids changing state and mutable data.
+  - Imperative Programming: Focuses on describing how a program operates through statements that change a program's state.
+  - Declarative Programming: Focuses on what the program should accomplish without specifying how to achieve it. Examples include SQL and HTML.
+- Python's flexibility allows developers to choose the most suitable paradigm for their specific use case or combine multiple paradigms in a single project.
+
+### Object-Oriented Programming (OOP) in Python
+- OOP is a programming paradigm that uses "objects" to represent data and behavior.
+- Key concepts of OOP include:
+  - Classes: Blueprints for creating objects. They define attributes (data) and methods (functions) that operate on the data.
+  - Objects: Instances of classes that encapsulate data and behavior.
+  - The four pillars of OOP are:
+    - Encapsulation: Restricting access to certain components of an object to prevent unintended interference and misuse.
+      - Example: Using private attributes and methods in a class.
+    - Abstraction: Hiding complex implementation details and showing only the necessary features of an object.
+      - Example: Making coffee using a coffee machine without knowing the internal workings.
+    - Inheritance: Creating new classes based on existing classes to promote code reuse and establish a hierarchical relationship.
+      - Example: A `Car` class inheriting from a `Vehicle` class.
+    - Polymorphism: Allowing objects of different classes to be treated as objects of a common superclass, enabling flexibility and the ability to extend code.
+      - Example: A function that can accept different types of objects and call their methods without knowing their specific types.
+
+### Classes and Objects in Python
+- A class is a blueprint for creating objects. It defines attributes (data) and methods (functions) that operate on the data.
+- You can define a class using the `class` keyword:
+  ```python
+  class ClassName:
+      # class attributes and methods
+  ```
+- An object is an instance of a class that encapsulates data and behavior.
+- You can create an object by calling the class as if it were a function:
+  ```python
+  object_name = ClassName()
+  ```
+- it can have methods and attributes
+- Example of a simple class and object:
+  ```python
+  class Dog:
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+      def bark(self):
+          print("Woof!")
+  my_dog = Dog("Buddy", 3)
+  my_dog.bark()  # Output: Woof!
+  print(my_dog.name)  # Output: Buddy
+  print(my_dog.age)   # Output: 3
+  ```
+- The `__init__` method is a special method called a constructor that initializes the object's attributes when the object is created.
+- You can define methods within a class to perform actions on the object's data.
+- You can access an object's attributes and methods using the dot (`.`) notation.
+- Example of using methods and attributes:
+  ```python
+  class Circle:
+      def __init__(self, radius):
+          self.radius = radius
+      def area(self):
+          return 3.14 * self.radius ** 2
+  my_circle = Circle(5)
+  print(my_circle.area())  # Output: 78.5
+  ```
+- You can create multiple objects from the same class, each with its own set of attributes.
+- Example:
+  ```python
+  dog1 = Dog("Max", 2)
+  dog2 = Dog("Bella", 4)
+  print(dog1.name)  # Output: Max
+  print(dog2.name)  # Output: Bella
+  ```
+
+### Inheritance in Python
+- Inheritance is a mechanism that allows a new class (child class) to inherit attributes and methods from an existing class (parent class).
+- It promotes code reuse and establishes a hierarchical relationship between classes.
+- You can define a child class by specifying the parent class in parentheses after the child class name:
+  ```python
+  class ChildClass(ParentClass):
+      # child class attributes and methods
+  ```
+- Example of inheritance:
+  ```python
+  class Animal:
+      def speak(self):
+          print("Animal speaks")
+  class Dog(Animal):
+      def bark(self):
+          print("Woof!")
+  my_dog = Dog()
+  my_dog.speak()  # Output: Animal speaks
+  my_dog.bark()   # Output: Woof!
+  ```
+- The child class can override methods from the parent class to provide specific implementations.
+- Example of method overriding:
+  ```python
+  class Cat(Animal):
+      def speak(self):
+          print("Meow!")
+  my_cat = Cat()
+  my_cat.speak()  # Output: Meow!
+  ```
+- You can use the `super()` function to call methods from the parent class within the child class.
+- Example of using `super()`:
+  ```python
+  class Bird(Animal):
+      def speak(self):
+          super().speak()  # Call parent class method
+          print("Chirp!")
+  my_bird = Bird()
+  my_bird.speak()  # Output: Animal speaks
+                   #         Chirp!
+  ``` 
+  - Python supports multiple inheritance, allowing a child class to inherit from multiple parent classes.
+  ```python
+  class Parent1:
+      def method1(self):
+          print("Method from Parent1")
+  class Parent2:
+      def method2(self):
+          print("Method from Parent2")
+  class Child(Parent1, Parent2):
+      pass
+  my_child = Child()
+  my_child.method1()  # Output: Method from Parent1
+  my_child.method2()  # Output: Method from Parent2
+  ```
+### Polymorphism in Python
+- Polymorphism is the ability of different classes to be treated as instances of the same class through a common interface.
+- It allows methods to be used on different objects, even if they are of different types.
+- Example of polymorphism using method overriding:
+  ```python
+  class Dog:
+      def speak(self):
+          print("Woof!")
+  class Cat:
+      def speak(self):
+          print("Meow!")
+  def animal_sound(animal):
+      animal.speak()
+  my_dog = Dog()
+  my_cat = Cat()
+  animal_sound(my_dog)  # Output: Woof!
+  animal_sound(my_cat)  # Output: Meow!
+  ```
+- Polymorphism can also be achieved through duck typing, where the type of an object is determined by the methods it defines rather than its actual class.
+- Example of duck typing:
+  ```python
+  class Bird:
+      def fly(self):
+          print("Flying!")
+  class Airplane:
+      def fly(self):
+          print("Taking off!")
+  def make_it_fly(flyable):
+      flyable.fly()
+  my_bird = Bird()
+  my_plane = Airplane()
+  make_it_fly(my_bird)   # Output: Flying!
+  make_it_fly(my_plane)  # Output: Taking off!
+  ```
+
