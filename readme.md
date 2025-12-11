@@ -712,4 +712,244 @@
 
 ## Day 4: Common Libraries in Python
 
+### Varialbe Scopes in Python
+- Variable scope refers to the visibility and lifetime of a variable within different parts of a program.
+- There are four main types of variable scopes in Python:
+  - Local Scope: Variables defined within a function are local to that function and cannot be accessed outside of it.
+    ```python
+    def my_function():
+        local_var = 10  # Local variable
+        print(local_var)
+    my_function()
+    # print(local_var)  # This will raise an error
+    ```
+  - Enclosing Scope: Variables defined in the enclosing (outer) function can be accessed by nested (inner) functions.
+    ```python
+    def outer_function():
+        outer_var = 20  # Enclosing variable
+        def inner_function():
+            print(outer_var)  # Accessing enclosing variable
+        inner_function()
+    outer_function()
+    ```
+  - Global Scope: Variables defined at the top level of a module or script are global and can be accessed from anywhere within that module.
+    ```python
+    global_var = 30  # Global variable
+    def my_function():
+        print(global_var)  # Accessing global variable
+    my_function()
+    print(global_var)  # Accessing global variable
+    ```
+  - Built-in Scope: Python has a built-in scope that contains names of built-in functions and exceptions. These names can be accessed from any part of the program.
+    ```python
+    print(len("Hello"))  # Using built-in function
+    ```
+- You can use the `global` keyword to modify a global variable inside a function.
+  ```python
+  count = 0  # Global variable
+  def increment():
+      global count
+      count += 1
+  increment()
+  print(count)  # Output: 1
+  ```
+- You can use the `nonlocal` keyword to modify a variable in the enclosing scope from a nested function.
+  ```python
+  def outer_function():
+      count = 0  # Enclosing variable
+      def inner_function():
+          nonlocal count
+          count += 1
+      inner_function()
+      print(count)  # Output: 1
+  outer_function()
+  ```
 
+### Escape Sequences in Python
+- Escape sequences are special characters used in strings to represent certain whitespace or control characters.
+- Common escape sequences in Python include:
+  - `\n`: Newline - Moves the cursor to the next line.
+    ```python
+    print("Hello\nWorld")
+    ```
+  - `\t`: Tab - Inserts a horizontal tab space.
+    ```python
+    print("Hello\tWorld")
+    ```
+  - `\\`: Backslash - Inserts a backslash character.
+    ```python
+    print("This is a backslash: \\")
+    ```
+  - `\'`: Single Quote - Inserts a single quote character.
+    ```python
+    print('It\'s a sunny day')
+    ```
+  - `\"`: Double Quote - Inserts a double quote character.
+    ```python
+    print("He said, \"Hello!\"")
+    ```
+  - `\r`: Carriage Return - Moves the cursor to the beginning of the line.
+    ```python
+    print("Hello\rWorld")
+    ```
+  - `\b`: Backspace - Deletes the character before the cursor.
+    ```python
+    print("Hello\bWorld")
+    ```
+  - `\f`: Form Feed - Advances the cursor to the next page (not commonly used).
+    ```python
+    print("Hello\fWorld")
+    ```
+  - `\v`: Vertical Tab - Inserts a vertical tab space (not commonly used).
+    ```python
+    print("Hello\vWorld")
+    ```
+
+### os library in Python
+- The `os` library in Python provides a way to interact with the operating system.
+- Commonly used functions in the `os` library include:
+  - `os.getcwd()`: Returns the current working directory.
+    ```python
+    import os
+    print(os.getcwd())
+    ```
+  - `os.chdir(path)`: Changes the current working directory to the specified path.
+    ```python
+    os.chdir('/path/to/directory')
+    ```
+  - `os.listdir(path)`: Returns a list of files and directories in the specified path.
+    ```python
+    print(os.listdir('.'))
+    ```
+  - `os.mkdir(path)`: Creates a new directory at the specified path.
+    ```python
+    os.mkdir('new_directory')
+    ```
+  - `os.rmdir(path)`: Removes an empty directory at the specified path.
+    ```python
+    os.rmdir('new_directory')
+    ```
+  - `os.remove(path)`: Deletes a file at the specified path.
+    ```python
+    os.remove('file.txt')
+    ```
+  - `os.rename(src, dst)`: Renames a file or directory from `src` to `dst`.
+    ```python
+    os.rename('old_name.txt', 'new_name.txt')
+    ```
+  - `os.path.join(path, *paths)`: Joins one or more path components intelligently.
+    ```python
+    full_path = os.path.join('folder', 'file.txt')
+    ```
+  - `os.path.exists(path)`: Checks if a path exists.
+    ```python
+    print(os.path.exists('file.txt'))
+    ```
+  - `os.path.isfile(path)`: Checks if a path is a file.
+    ```python
+    print(os.path.isfile('file.txt'))
+    ```
+  - `os.path.isdir(path)`: Checks if a path is a directory.
+    ```python
+    print(os.path.isdir('folder'))
+    ```
+  - `os.environ`: A dictionary representing the user's environmental variables.
+    ```python 
+    print(os.environ['HOME'])
+    ```
+- The `os` library also provides functions for working with file permissions, process management, and more.
+
+### File Handling in Python
+- File handling in Python allows you to read from and write to files on your system.
+- You can open a file using the `open()` function, which takes the file name and mode as arguments.
+- Common file modes include:
+  - `'r'`: Read mode (default) - Opens a file for reading.
+  - `'w'`: Write mode - Opens a file for writing (creates a new file or truncates an existing file).
+  - `'a'`: Append mode - Opens a file for appending (creates a new file if it doesn't exist).
+  - `'b'`: Binary mode - Opens a file in binary mode (used with other modes like `'rb'` or `'wb'`).
+  - `'+'`: Update mode - Opens a file for both reading and writing (used with other modes like `'r+'` or `'w+'`).
+- Example of opening a file:
+  ```python
+  file = open('example.txt', 'r')
+  ```
+- You can read from a file using methods like:
+  - `read()`: Reads the entire file content.
+    ```python
+    content = file.read()
+    ```
+  - `readline()`: Reads a single line from the file.
+    ```python
+    line = file.readline()
+    ```
+  - `readlines()`: Reads all lines from the file and returns them as a list.
+    ```python
+    lines = file.readlines()
+    ```
+- You can write to a file using methods like:
+  - `write(string)`: Writes a string to the file.
+    ```python
+    file.write("Hello, World!")
+    ```
+- You can use with statement to automatically handle file closing:
+  ```python
+  with open('example.txt', 'r') as file:
+      content = file.read()
+      print(content)
+  ```
+  - it has a lot of options like 'w' for write, 'a' for append, 'r+' for read and write
+- You can use seek to move the file pointer to a specific position:
+  ```python
+  file.seek(0)  # Move to the beginning of the file
+  ```
+- Always remember to close the file after operations to free up system resources:
+  ```python
+  file.close()
+  ```
+- File Operations can raise exceptions, so it's good practice to handle them using try-except blocks.
+   - it can raise exceptions like FileNotFoundError, IOError, PermissionError, etc.
+
+
+### re library in Python
+- The `re` library in Python provides support for regular expressions, which are used for pattern matching and manipulation of strings.
+- Commonly used functions in the `re` library include:  
+  - `re.match(pattern, string)`: Checks if the beginning of the string matches the pattern.
+    ```python
+    import re
+    result = re.match(r'Hello', 'Hello World')
+    print(result.group())  # Output: Hello
+    ```
+  - `re.search(pattern, string)`: Searches the entire string for a match to the pattern.
+    ```python
+    result = re.search(r'World', 'Hello World')
+    print(result.group())  # Output: World
+    ```
+  - `re.findall(pattern, string)`: Returns a list of all non-overlapping matches of the pattern in the string.
+    ```python
+    result = re.findall(r'\d+', 'There are 2 apples and 3 oranges')
+    print(result)  # Output: ['2', '3']
+    ```
+  - `re.sub(pattern, repl, string)`: Replaces occurrences of the pattern in the string with `repl`.
+    ```python
+    result = re.sub(r'apple', 'banana', 'I like apple')
+    print(result)  # Output: I like banana
+    ```
+  - `re.split(pattern, string)`: Splits the string by occurrences of the pattern.
+    ```python
+    result = re.split(r'\s+', 'Hello   World')
+    print(result)  # Output: ['Hello', 'World']
+    ```
+- Regular expression patterns use special characters to define search criteria, such as:
+  - `.`: Matches any character except a newline.
+  - `^`: Matches the start of the string.
+  - `$`: Matches the end of the string.
+  - `*`: Matches zero or more occurrences of the preceding element.
+  - `+`: Matches one or more occurrences of the preceding element.
+  - `?`: Matches zero or one occurrence of the preceding element.
+  - `[]`: Matches any single character within the brackets.
+  - `|`: Acts as a logical OR between patterns.
+  - `()`: Groups patterns together.
+- You can use raw strings (prefixing the string with `r`) to avoid escaping backslashes in regular expressions.
+  ```python
+  pattern = r'\d+'
+  ```
+- The `re` library also supports compiling regular expressions for better performance using `re.compile(pattern)`.
