@@ -1,8 +1,4 @@
-from abc import ABC, abstractmethod
-
-class CoffeeMachineBase(ABC):
-    """Abstract base class for any coffee machine."""
-    @abstractmethod
+class CoffeeMachineBase:
     def make_coffee(self):
         pass
 
