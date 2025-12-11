@@ -1,5 +1,22 @@
 # This is an example of Abstraction and Encapsultation 
 
+class BankAccount:
+    def __init__(self, initial_balance):
+        self.__balance = initial_balance
+
+    def deposit(self, amount):
+        if amount <= 0:
+            raise ValueError("Amount must be positive")
+        self.__balance += amount
+
+    def withdraw(self, amount):
+        if amount > self.__balance:
+            raise ValueError("Insufficient funds")
+        self.__balance -= amount
+
+    def get_balance(self):
+        return self.__balance
+
 
 class CoffeeMachine:
     def __brew_coffee(self):
@@ -49,6 +66,13 @@ def test_abstraction_encapsulation():
     print("------------------- implementing abstraction and encapsulation ------------------------")
     coffee_machine = CoffeeMachine()
     coffee_machine.make_coffee()
+
+    Bank_account = BankAccount(1000)
+    print("Initial Balance:", Bank_account.get_balance())
+    Bank_account.deposit(500)
+    print("Balance after deposit:", Bank_account.get_balance())
+    Bank_account.withdraw(300)
+    print("Balance after withdrawal:", Bank_account.get_balance())
 
 def main():
 

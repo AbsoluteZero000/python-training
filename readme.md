@@ -710,3 +710,6 @@
   make_it_fly(my_plane)  # Output: Taking off!
   ```
 
+## Day 4: Common Libraries in Python
+
+
