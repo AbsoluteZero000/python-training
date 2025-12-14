@@ -10,4 +10,3 @@ with open("server-log.txt", "r") as file:
 
         print("The number of errors found in the logs are " + str(counter))
 
-

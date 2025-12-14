@@ -953,3 +953,245 @@
   pattern = r'\d+'
   ```
 - The `re` library also supports compiling regular expressions for better performance using `re.compile(pattern)`.
+
+
+
+## Day 5: Functional Programming and More
+
+### Decorators in Python
+- Decorators are a way to modify or enhance the behavior of functions or methods without changing their actual code.
+- A decorator is a function that takes another function as an argument, adds some functionality, and returns a new function.
+- You can define a decorator using the `def` keyword:
+  ```python
+  def my_decorator(func):
+      def wrapper():
+          # code to execute before the original function
+          print("Before function call")
+          func()
+          print("After function call")
+          # code to execute after the original function
+      return wrapper
+  ```
+- You can apply a decorator to a function using the `@` symbol:
+  ```python
+  @my_decorator
+  def my_function():
+      print("Hello, World!")
+  ```
+  - output:
+    ```text
+      Before function call
+      Hello, World!
+      After function call
+    ```
+- Example of a simple decorator:
+  ```python
+  def uppercase_decorator(func):
+      def wrapper():
+          result = func()
+          return result.upper()
+      return wrapper
+  @uppercase_decorator
+  def greet():
+      return "hello"
+  print(greet())  # Output: HELLO
+  ```
+- Another Example of Divide decorator:
+  ```python
+  def divide_decorator(func):
+      def wrapper(a, b):
+          if b == 0:
+              return "Error: Division by zero"
+          return func(a, b)
+      return wrapper
+
+  @divide_decorator
+  def divide(a, b):
+      return a / b
+  print(divide(10, 2))  # Output: 5.0
+  print(divide(10, 0))  # Output: Error: Division by zero
+  ```
+
+- Decorators can also accept arguments by defining the wrapper function to accept parameters:
+  ```python
+  def repeat_decorator(times):
+      def decorator(func):
+          def wrapper(*args, **kwargs):
+              for _ in range(times):
+                  func(*args, **kwargs)
+          return wrapper
+      return decorator
+  @repeat_decorator(3)
+  def say_hello():
+      print("Hello!")
+  say_hello()
+  # Output:
+  # Hello!
+  # Hello!
+  # Hello!
+  ```
+- You can use multiple decorators on a single function by stacking them:
+  ```python
+  @decorator1
+  @decorator2
+  def my_function():
+      pass
+  ```
+- Decorators are commonly used for logging, access control, caching, and other cross-cutting concerns.
+
+### args and kwargs in Python
+- `*args` and `**kwargs` are special syntax in Python used to pass a variable number of arguments to a function.
+- `*args` allows you to pass a variable number of non-keyword arguments to a function.
+- Example of using `*args`:
+  ```python
+  def my_function(*args):
+      for arg in args:
+          print(arg)
+  my_function(1, 2, 3)  # Output: 1
+                        #         2
+                        #         3
+  ```
+- `**kwargs` allows you to pass a variable number of keyword arguments (key-value pairs) to a function.
+- Example of using `**kwargs`:
+  ```python
+  def my_function(**kwargs):
+      for key, value in kwargs.items():
+          print(f"{key}: {value}")
+  my_function(name="Alice", age=25)  # Output: name: Alice
+                                     #         age: 25
+  ```
+- You can use both `*args` and `**kwargs` in the same function definition:
+  ```python
+  def my_function(*args, **kwargs):
+      for arg in args:
+          print(arg)
+      for key, value in kwargs.items():
+          print(f"{key}: {value}")
+  my_function(1, 2, name="Alice", age=25)
+  # Output: 1
+  #         2
+  #         name: Alice
+  #         age: 25
+  ```
+
+### openpyxl library in Python
+- The `openpyxl` library in Python is used for reading and writing Excel files (.xlsx format).
+- You can install the `openpyxl` library using pip:
+  ```bash
+  pip install openpyxl
+  ```
+- Commonly used functions and classes in the `openpyxl` library include:
+  - `openpyxl.load_workbook(filename)`: Loads an existing Excel workbook.
+    ```python
+    from openpyxl import load_workbook
+    workbook = load_workbook('example.xlsx')
+    ```
+  - `openpyxl.Workbook()`: Creates a new Excel workbook.
+    ```python
+    from openpyxl import Workbook
+    workbook = Workbook()
+    ```
+  - `workbook.active`: Returns the active worksheet in the workbook.
+    ```python
+    sheet = workbook.active
+    ```
+  - `workbook.create_sheet(title)`: Creates a new worksheet with the specified title.
+    ```python
+    new_sheet = workbook.create_sheet('NewSheet')
+    ```
+  - `sheet['A1']`: Accesses a specific cell in the worksheet (e.g., cell A1).
+    ```python
+    cell = sheet['A1']
+    ```
+  - `sheet.append([data1, data2, ...])`: Appends a new row of data to the worksheet.
+    ```python
+    sheet.append([1, 2, 3])
+    ```
+  - `workbook.save(filename)`: Saves the workbook to the specified filename.
+    ```python
+    workbook.save('example.xlsx')
+    ```
+- Example of creating a new Excel file and writing data to it:
+  ```python
+  from openpyxl import Workbook
+  workbook = Workbook()
+  sheet = workbook.active
+  sheet['A1'] = 'Name'
+  sheet['B1'] = 'Age'
+  sheet.append(['Alice', 25])
+  sheet.append(['Bob', 30])
+  workbook.save('people.xlsx')
+  ```
+- Example of reading data from an existing Excel file:
+  ```python
+  from openpyxl import load_workbook
+  workbook = load_workbook('people.xlsx')
+  sheet = workbook.active
+  for row in sheet.iter_rows(min_row=2, values_only=True):
+      print(row)
+  # Output:
+  # ('Alice', 25)
+  # ('Bob', 30)
+  ```
+- The `openpyxl` library also supports advanced features like formatting cells, adding charts, and working with formulas.
+
+### pandas library in Python while
+- The `pandas` library in Python is a powerful data manipulation and analysis library.
+- You can install the `pandas` library using pip:
+  ```bash
+  pip install pandas
+  ```
+- Commonly used functions and classes in the `pandas` library include:
+  - `pandas.DataFrame(data)`: Creates a DataFrame, which is a 2-dimensional labeled data structure.
+  - DataFrame is a data structure similar to a table in a database or an Excel spreadsheet.
+    ```python
+    import pandas as pd
+    data = {'Name': ['Alice', 'Bob'], 'Age': [25, 30]}
+    df = pd.DataFrame(data)
+    ```
+  - `pandas.read_csv(filename)`: Reads a CSV file into a DataFrame.
+    ```python
+    df = pd.read_csv('data.csv')
+    ```
+  - `DataFrame.head(n)`: Returns the first `n` rows of the DataFrame.
+    ```python
+    print(df.head(5))
+    ```
+  - `DataFrame.info()`: Provides a summary of the DataFrame, including data types and non-null counts.
+    ```python
+    df.info()
+    ```
+  - `DataFrame.describe()`: Generates descriptive statistics of the DataFrame.
+    ```python
+    print(df.describe())
+    ```
+  - `DataFrame.loc[]`: Accesses a group of rows and columns by labels.
+    ```python
+    print(df.loc[0])  # Access first row
+    ```
+  - `DataFrame.iloc[]`: Accesses a group of rows and columns by integer position.
+    ```python
+    print(df.iloc[0])  # Access first row
+    ```
+  - `DataFrame['column_name']`: Accesses a specific column in the DataFrame.
+    ```python
+    print(df['Name'])
+    ```
+  - `DataFrame.to_csv(filename)`: Writes the DataFrame to a CSV file.
+    ```python
+    df.to_csv('output.csv', index=False)
+    ```
+  - DataFrame.where() : Filters the DataFrame based on a condition.
+    ```python
+    filtered_df = df[df['Age'] > 25]
+    ```
+- Example of creating a DataFrame and performing basic operations:
+  ```python
+  import pandas as pd
+  data = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, 35]}
+  df = pd.DataFrame(data)
+  print(df.head())  # Display first few rows
+  print(df['Age'].mean())  # Calculate average age
+  ```
+- The `pandas` library also supports advanced data manipulation techniques such as merging, grouping,
+
